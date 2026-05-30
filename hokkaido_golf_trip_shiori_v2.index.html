@@ -1,0 +1,402 @@
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+.cover {
+  background: linear-gradient(160deg, #0C447C 0%, #185FA5 50%, #378ADD 100%);
+  border-radius: var(--border-radius-lg);
+  padding: 2.5rem 2rem 2rem;
+  color: white;
+  margin-bottom: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.cover::before {
+  content: '';
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 200px; height: 200px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 50%;
+}
+.cover::after {
+  content: '';
+  position: absolute;
+  bottom: -60px; left: 60px;
+  width: 260px; height: 260px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 50%;
+}
+.cover-badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.18);
+  border: 0.5px solid rgba(255,255,255,0.3);
+  border-radius: 20px;
+  padding: 4px 14px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  margin-bottom: 1rem;
+}
+.cover h1 { font-size: 28px; font-weight: 500; margin-bottom: 0.4rem; }
+.cover .subtitle { font-size: 14px; opacity: 0.8; margin-bottom: 1.5rem; }
+.members { display: flex; gap: 10px; flex-wrap: wrap; }
+.member-chip {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(255,255,255,0.15);
+  border: 0.5px solid rgba(255,255,255,0.25);
+  border-radius: 20px; padding: 5px 12px; font-size: 13px;
+}
+.member-chip .avatar {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: rgba(255,255,255,0.3);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 500;
+}
+.day-section {
+  background: var(--color-background-primary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden; margin-bottom: 1.5rem;
+}
+.day-header {
+  padding: 1rem 1.25rem;
+  border-bottom: 0.5px solid var(--color-border-tertiary);
+  display: flex; align-items: center; gap: 12px;
+}
+.day-badge {
+  background: #E6F1FB; color: #0C447C;
+  font-size: 11px; font-weight: 500;
+  padding: 3px 10px; border-radius: 12px;
+}
+.day-title { font-size: 15px; font-weight: 500; color: var(--color-text-primary); }
+.day-sub { font-size: 12px; color: var(--color-text-secondary); margin-left: auto; }
+.timeline { padding: 1.25rem; }
+.tl-item { display: flex; gap: 16px; margin-bottom: 1rem; }
+.tl-item:last-child { margin-bottom: 0; }
+.tl-left { display: flex; flex-direction: column; align-items: center; min-width: 44px; }
+.tl-time { font-size: 13px; font-weight: 500; color: var(--color-text-secondary); white-space: nowrap; }
+.tl-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  border: 2px solid #378ADD;
+  background: var(--color-background-primary);
+  margin: 6px 0; flex-shrink: 0;
+}
+.tl-dot.filled { background: #378ADD; }
+.tl-dot.golf { border-color: #3B6D11; background: #3B6D11; }
+.tl-dot.hotel { border-color: #854F0B; background: #854F0B; }
+.tl-line { flex: 1; width: 1px; background: var(--color-border-tertiary); min-height: 24px; }
+.tl-right { flex: 1; padding-bottom: 1rem; }
+.tl-item:last-child .tl-right { padding-bottom: 0; }
+.tl-card {
+  background: var(--color-background-secondary);
+  border-radius: var(--border-radius-md);
+  padding: 0.75rem 1rem;
+}
+.tl-card-title { font-size: 14px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 2px; }
+.tl-card-detail { font-size: 12px; color: var(--color-text-secondary); line-height: 1.6; }
+.tl-card.flight {
+  border-left: 3px solid #378ADD;
+  border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
+  background: #E6F1FB;
+}
+.tl-card.flight .tl-card-title { color: #0C447C; }
+.tl-card.flight .tl-card-detail { color: #185FA5; }
+.tl-card.golf {
+  border-left: 3px solid #3B6D11;
+  border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
+  background: #EAF3DE;
+}
+.tl-card.golf .tl-card-title { color: #27500A; }
+.tl-card.golf .tl-card-detail { color: #3B6D11; }
+.tl-card.hotel-card {
+  border-left: 3px solid #854F0B;
+  border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
+  background: #FAEEDA;
+}
+.tl-card.hotel-card .tl-card-title { color: #412402; }
+.tl-card.hotel-card .tl-card-detail { color: #854F0B; }
+.tl-card.note {
+  border-left: 3px solid var(--color-border-secondary);
+  border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
+}
+.split-box {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 0;
+}
+.split-card {
+  border-radius: var(--border-radius-md);
+  padding: 0.65rem 0.9rem;
+  font-size: 12px;
+}
+.split-card.blue { background: #E6F1FB; border-left: 3px solid #378ADD; border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0; }
+.split-card.blue .split-name { color: #0C447C; font-weight: 500; font-size: 13px; }
+.split-card.blue .split-detail { color: #185FA5; }
+.split-card.amber { background: #FAEEDA; border-left: 3px solid #854F0B; border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0; }
+.split-card.amber .split-name { color: #412402; font-weight: 500; font-size: 13px; }
+.split-card.amber .split-detail { color: #854F0B; }
+.tbd-badge {
+  display: inline-block;
+  background: var(--color-background-warning);
+  color: var(--color-text-warning);
+  font-size: 11px; padding: 2px 8px; border-radius: 10px; margin-top: 4px;
+}
+.info-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 10px; margin-bottom: 1.5rem;
+}
+.info-card {
+  background: var(--color-background-primary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--border-radius-md);
+  padding: 0.9rem 1rem;
+}
+.info-label { font-size: 11px; color: var(--color-text-tertiary); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+.info-value { font-size: 14px; font-weight: 500; color: var(--color-text-primary); }
+.info-sub { font-size: 11px; color: var(--color-text-secondary); margin-top: 2px; }
+.section-title { font-size: 11px; color: var(--color-text-tertiary); text-transform: uppercase; letter-spacing: 0.08em; margin: 0 0 10px; }
+</style>
+
+<div style="padding: 1rem 0;">
+
+<div class="cover">
+  <div class="cover-badge">2026 北海道ゴルフ旅行</div>
+  <h1>旅のしおり</h1>
+  <p class="subtitle">6月16日（火）〜 6月17日（水）　1泊2日</p>
+  <div class="members">
+    <div class="member-chip"><div class="avatar">TK</div>高村 武秀</div>
+    <div class="member-chip"><div class="avatar">TC</div>川平 達也</div>
+    <div class="member-chip"><div class="avatar">MF</div>藤井 雅隆</div>
+    <div class="member-chip"><div class="avatar" style="font-size:9px;">女性</div>女性1名</div>
+  </div>
+</div>
+
+<p class="section-title">フライト・宿泊 概要</p>
+<div class="info-grid">
+  <div class="info-card">
+    <div class="info-label">往路フライト（全員）</div>
+    <div class="info-value">NH4711（AIR DO運航）</div>
+    <div class="info-sub">羽田 06:55 → 新千歳 08:25</div>
+  </div>
+  <div class="info-card">
+    <div class="info-label">復路フライト（川平・藤井）</div>
+    <div class="info-value">NH082（ANA）</div>
+    <div class="info-sub">新千歳 20:30 → 羽田 22:10</div>
+  </div>
+  <div class="info-card">
+    <div class="info-label">宿泊（全員）</div>
+    <div class="info-value">コンフォートホテル千歳</div>
+    <div class="info-sub">1泊 / 朝食付き</div>
+  </div>
+  <div class="info-card">
+    <div class="info-label">移動</div>
+    <div class="info-value">高村さんレンタカー</div>
+    <div class="info-sub">小樽→千歳は川平・藤井が電車</div>
+  </div>
+</div>
+
+<div class="day-section">
+  <div class="day-header">
+    <span class="day-badge">Day 1</span>
+    <span class="day-title">6月16日（火）　羽田 → 札幌 → 北海道クラシック</span>
+    <span class="day-sub">⛳</span>
+  </div>
+  <div class="timeline">
+
+    <div class="tl-item">
+      <div class="tl-left"><span class="tl-time">〜06:00</span><div class="tl-dot filled"></div><div class="tl-line"></div></div>
+      <div class="tl-right">
+        <div class="tl-card note">
+          <div class="tl-card-title">羽田空港 第2ターミナル 集合（全員）</div>
+          <div class="tl-card-detail">各自で羽田へ。出発55分前を目安に集合</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><span class="tl-time">06:55</span><div class="tl-dot filled"></div><div class="tl-line"></div></div>
+      <div class="tl-right">
+        <div class="tl-card flight">
+          <div class="tl-card-title">✈ NH4711 出発（AIR DO運航）</div>
+          <div class="tl-card-detail">東京(羽田) T2 → 札幌(新千歳) TD　所要1時間30分</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><span class="tl-time">08:25</span><div class="tl-dot filled"></div><div class="tl-line"></div></div>
+      <div class="tl-right">
+        <div class="tl-card flight">
+          <div class="tl-card-title">新千歳空港 到着 → レンタカー受取</div>
+          <div class="tl-card-detail">高村さんのレンタカーにて北海道クラシックへ出発（全員）</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><span class="tl-time">〜11:30</span><div class="tl-dot"></div><div class="tl-line"></div></div>
+      <div class="tl-right">
+        <div class="tl-card note">
+          <div class="tl-card-title">北海道クラシック 到着・昼食</div>
+          <div class="tl-card-detail">クラブハウスにて昼食</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><span class="tl-time">13:14</span><div class="tl-dot golf"></div><div class="tl-line"></div></div>
+      <div class="tl-right">
+        <div class="tl-card golf">
+          <div class="tl-card-title">⛳ 北海道クラシックゴルフクラブ　スタート</div>
+          <div class="tl-card-detail">4名　13:14スタート</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><span class="tl-time">夕方</span><div class="tl-dot hotel"></div><div class="tl-line"></div></div>
+      <div class="tl-right">
+        <div class="tl-card note">
+          <div class="tl-card-title">ラウンド終了 → 千歳市内へ移動（全員）</div>
+          <div class="tl-card-detail">レンタカーにてコンフォートホテル千歳へ</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><span class="tl-time">19:00</span><div class="tl-dot hotel"></div><div class="tl-line"></div></div>
+      <div class="tl-right">
+        <div class="tl-card hotel-card">
+          <div class="tl-card-title">🏨 コンフォートホテル千歳 チェックイン（全員）</div>
+          <div class="tl-card-detail">予約番号：20260419192473610123-27-8411</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><span class="tl-time">夜</span><div class="tl-dot"></div></div>
+      <div class="tl-right">
+        <div class="tl-card note">
+          <div class="tl-card-title">夕食（全員）</div>
+          <div class="tl-card-detail">
+            <span class="tbd-badge">⚠ 未定</span>
+            <div style="margin-top:4px;">千歳市内にて。ジンギスカン・海鮮・スープカレーなど北海道グルメを検討</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="day-section">
+  <div class="day-header">
+    <span class="day-badge">Day 2</span>
+    <span class="day-title">6月17日（水）　小樽カントリー → 解散</span>
+    <span class="day-sub">⛳ → 各自へ</span>
+  </div>
+  <div class="timeline">
+
+    <div class="tl-item">
+      <div class="tl-left"><span class="tl-time">朝食</span><div class="tl-dot filled"></div><div class="tl-line"></div></div>
+      <div class="tl-right">
+        <div class="tl-card note">
+          <div class="tl-card-title">ホテルにて朝食（無料ビュッフェ・全員）</div>
+          <div class="tl-card-detail">チェックアウト 11:00まで</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><span class="tl-time">〜11:00</span><div class="tl-dot filled"></div><div class="tl-line"></div></div>
+      <div class="tl-right">
+        <div class="tl-card note">
+          <div class="tl-card-title">チェックアウト → 小樽カントリーへ出発（全員）</div>
+          <div class="tl-card-detail">レンタカーにて小樽へ（千歳〜小樽 約90分）</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><span class="tl-time">〜12:30</span><div class="tl-dot"></div><div class="tl-line"></div></div>
+      <div class="tl-right">
+        <div class="tl-card note">
+          <div class="tl-card-title">小樽カントリー倶楽部 到着・昼食（全員）</div>
+          <div class="tl-card-detail">クラブハウスにて昼食</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><span class="tl-time">13:30</span><div class="tl-dot golf"></div><div class="tl-line"></div></div>
+      <div class="tl-right">
+        <div class="tl-card golf">
+          <div class="tl-card-title">⛳ 小樽カントリー倶楽部　スタート（全員）</div>
+          <div class="tl-card-detail">4名　13:30スタート</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><span class="tl-time">17時頃</span><div class="tl-dot filled"></div><div class="tl-line"></div></div>
+      <div class="tl-right">
+        <div class="tl-card note">
+          <div class="tl-card-title">ラウンド終了 → ここで行動が分かれます</div>
+          <div class="tl-card-detail" style="margin-bottom: 8px;">ラウンド後、2チームに分かれて行動</div>
+          <div class="split-box">
+            <div class="split-card blue">
+              <div class="split-name">川平・藤井</div>
+              <div class="split-detail">JR小樽駅 → 快速エアポートで新千歳空港へ（約80分）</div>
+            </div>
+            <div class="split-card amber">
+              <div class="split-name">高村・女性</div>
+              <div class="split-detail">もう1泊。引き続き北海道を満喫</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><span class="tl-time">〜19:30</span><div class="tl-dot filled"></div><div class="tl-line"></div></div>
+      <div class="tl-right">
+        <div class="tl-card note">
+          <div class="tl-card-title">新千歳空港 到着（川平・藤井）</div>
+          <div class="tl-card-detail">空港内にて夕食または軽食</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><span class="tl-time">20:30</span><div class="tl-dot filled"></div><div class="tl-line"></div></div>
+      <div class="tl-right">
+        <div class="tl-card flight">
+          <div class="tl-card-title">✈ NH082 出発（ANA）／川平・藤井</div>
+          <div class="tl-card-detail">札幌(新千歳) TD → 東京(羽田) T2　所要1時間40分</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left"><span class="tl-time">22:10</span><div class="tl-dot filled"></div></div>
+      <div class="tl-right">
+        <div class="tl-card flight">
+          <div class="tl-card-title">羽田空港 第2ターミナル 到着 → 解散</div>
+          <div class="tl-card-detail">川平・藤井 帰宅</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div style="background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 1rem 1.25rem; border: 0.5px solid var(--color-border-tertiary);">
+  <p style="font-size: 12px; font-weight: 500; color: var(--color-text-secondary); margin-bottom: 8px;">📋 確認事項・メモ</p>
+  <ul style="font-size: 13px; color: var(--color-text-secondary); line-height: 2; list-style: none; padding: 0;">
+    <li>• 羽田は第2ターミナル（ANA/AIR DO）</li>
+    <li>• ホテル予約番号：20260419192473610123-27-8411</li>
+    <li>• 1日目夜の夕食場所は未定　→ 要検討</li>
+    <li>• 小樽からの帰りは川平・藤井のみ快速エアポート利用</li>
+    <li>• 高村さん・女性はもう1泊（別途宿泊手配を確認）</li>
+    <li>• レンタカーは高村さんが手配済み</li>
+  </ul>
+</div>
+
+</div>
